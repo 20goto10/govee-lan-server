@@ -56,13 +56,13 @@ Raise or lower the brightness relatively up or down by a given amount with the "
 
 `curl http://192.168.1.230:3666?device=lightstrip&action=brightness&delta=-5`
 
-Set the color, in this case, to 100% green-ness. The "%23" entity makes the # symbol.
+Set the color, in this case, to 100% green-ness. 
 
-`curl http://192.168.1.230:3666?device=lightstrip&action=color&value=%2300FF00`
+`curl http://192.168.1.230:3666?device=lightstrip&action=color&value=00FF00`
 
 Fade the color, in this case, to pale blue, with a 3 second fade time (note that if "fade" is not supplied, it will use the default from config).
 
-`curl http://192.168.1.230:3666?device=lightstrip&action=color&value=%23DDFFDD&fade=3000`
+`curl http://192.168.1.230:3666?device=lightstrip&action=color&value=DDFFDD&fade=3000`
 
 Note that if running these curl commands in a terminal you will need to escape the & characters (i.e. change them to "\&").
 

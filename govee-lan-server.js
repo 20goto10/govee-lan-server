@@ -45,7 +45,7 @@ const handle_action = (govee_device, nickname, action, params) => {
 		       }
 	               break;
     case 'color': if (params['value']) {
-	            govee_device.actions.setColor({ hex: params.value });
+	            govee_device.actions.setColor({ hex: '#' + params.value });
 	            return { message: "set " + nickname + " color to " + params.value + " (" + govee_device.deviceID + ")" };
 	          }
 	          else {
