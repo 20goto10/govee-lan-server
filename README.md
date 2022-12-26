@@ -38,7 +38,7 @@ node govee-lan-server.js
 
 4. Once the app is set up, you can trigger the HTTP requests however you like (e.g. from curl, or a browser). Supposing it's running at 192.168.1.230, on the default port of 3666, and your device nickname in the device_map is "lightstrip".
 
-5. (optional) A systemd service script is included in the systemd directory here. It must be updated and copied to the correct location. See README in that directory.
+5. (optional) A systemd service daemon script is included in the `service` directory. It must be updated and copied to the correct location. See README in that directory.
 
 Turn it on:
 

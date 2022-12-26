@@ -1,0 +1,13 @@
+[Unit]
+Description=Govee Lan Server
+
+[Service]
+Type=simple
+WorkingDirectory=/home/openhabian/govee-lan-server/
+ExecStart=/usr/bin/node /home/openhabian/govee-lan-server/govee-lan-server.js 
+Restart=always
+RestartSec=4s
+
+[Install]
+WantedBy=multi-user.target
+
