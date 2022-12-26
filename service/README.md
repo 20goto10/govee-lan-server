@@ -8,9 +8,7 @@ sudo systemctl enable govee_lan_server
 sudo systemctl start govee_lan_server
 ```
 
-You can figure out what you did wrong from either:
-`sudo systemctl status govee_lan_server`
-or
+You can figure out what you did wrong from:
 `sudo systemctl status govee_lan_server`
 
 
