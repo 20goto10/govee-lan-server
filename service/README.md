@@ -4,9 +4,13 @@ Then copy the service file into `/etc/systemd/system`.
 After that is correctly updated:
 ```
 sudo systemctl daemon-reload
-sudo systemctl status govee_lan_server
-sudo systemctl start govee_lan_server
 sudo systemctl enable govee_lan_server
+sudo systemctl start govee_lan_server
 ```
+
+You can figure out what you did wrong from either:
+`sudo systemctl status govee_lan_server`
+or
+`sudo systemctl status govee_lan_server`
 
 
