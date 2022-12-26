@@ -27,9 +27,21 @@ const handle_action = (govee_device, nickname, action, params) => {
     case 'brightness': if (params['value']) {
 	                 govee_device.actions.setBrightness(params.value);
 	                 return { message: "set " + nickname + " brightness to " + params.value + " (" + govee_device.deviceID + ")" };
-	               }
+	               } 
+		       else if (params['delta']) {
+                         var current_brightness = govee_device.state.brightness;
+			 var delta = parseInt(params['delta']);
+                         var new_brightness = current_brightness + delta;
+                         if (new_brightness > 100) {
+				 new_brightness = 100;
+			 } else if (new_brightness < 0) {
+				 new_brightness = 0;
+			 }
+	                 govee_device.actions.setBrightness(new_brightness);
+	                 return { message: "adjust " + nickname + " brightness by " + delta + "%, from " + current_brightness + " to " + new_brightness + " (" + govee_device.deviceID + ")" };
+		       }
 	               else {
-			 return { error: "brightness needs a 'value' setting" };
+			 return { error: "brightness needs a 'value' or 'delta' setting" };
 		       }
 	               break;
     case 'color': if (params['value']) {
@@ -116,6 +128,7 @@ const start_server = () => {
 
       govee.on("deviceAdded", (device) => {
         console.log("Found new device:", device.deviceID, "ip address: ", device.ip, "model:", device.model);
+        // console.log("Full device map:", device);
         if (config['device_map'] && config['device_map'][device.deviceID]) {
           console.log("Device " + device.deviceID + " is mapped to name " + config['device_map'][device.deviceID]);
           devices[config['device_map'][device.deviceID]] = device;
