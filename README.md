@@ -89,8 +89,11 @@ Please, feel free. My apologies for any sloppy code or Node offenses-- this is s
 
 # Road map
 
+- *delta fix* -- brightening/dimming via the delta option doesn't really work the way people would want to use it, because the Govee doesn't update its state fast enough. So if you request dimming several times, you will probably get the same result as doing it once. There may be a way to trigger a state update, but most likely the solution is to not count on the device's brightness setting except the first time, and maintain it as independent state (e.g. in this app). Then set the brightness to a pre-calculated value based on that, and not by using the current (inaccurate) state.
+
 - *RGBIC control?*
 If there is some way of taking advantage of the RGBIC features I'd love to know about it. It's hardly urgent, and I won't be the one to figure that out. Honestly I don't really care about the animations-- I use the strip like track lighting, and can use their insanely complex app when I feel like setting a Halloween theme or something.
+
 - *de-sillification*
 There's some half-baked stuff in here. For example, there's no real need for an "action" parameter at all. The whole operation could be done by the request payload. Nicknames are pointless. The config is case-sensitive about IDs. This allows GET requests to do things that should require POST requests. Etc. All of this is true, but it's not meant to be an enterprise solution, just a quick fix to the problem. Still, eventually I might de-sillify it.
 
