@@ -1,0 +1,8 @@
+{
+  "port": 3666,
+  "default_fade_time": 2000,
+  "device_map": {
+    "AB:CD:EF:12:34:56:78:90": "lightstrip"
+  }
+}
+
