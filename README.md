@@ -26,9 +26,9 @@ cp config.json.sample config.json
 
 2. Edit `config.json` and map device IDs to whatever device nicknames you wish to use. If you're not sure of the device ID, just launch the server (per the next step). When the server discovers a device, it will print out the ID. Use that as a key in the 'device_map' section of the JSON config, with any nickname you like for the value. 
 
-The rest of the config, currently, is just a port setting for your server (default should be fine) and a default_fade_time if you want to fade colors over time (based on the examples from [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control)), which can be left as-is. 
+   The rest of the config, currently, is just a port setting for your server (default should be fine) and a default_fade_time if you want to fade colors over time (based on the examples from [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control)), which can be left as-is. 
 
-(I realize the device nicknames aren't really necessary but I prefer having a human-readable identifier in the URL so I understand my automations later. The config also makes it possible to avoid providing control of any devices you want to omit, for whatever reason may someday arise. I only have one Govee device in service so in my case it's a moot point.)
+   (I realize the device nicknames aren't really necessary but I prefer having a human-readable identifier in the URL so I understand my automations later. The config also makes it possible to avoid providing control of any devices you want to omit, for whatever reason may someday arise. I only have one Govee device in service so in my case it's a moot point.)
 
 3. Once you have your config map set up, start the app.
 ```
@@ -40,11 +40,18 @@ node govee-lan-server.js
 
 5. (optional) A systemd service daemon script is included in the `service` directory. It must be updated and copied to the correct location. See README in that directory.
 
-Turn it on:
+
+## Using the API
+
+Note that if running these curl commands in a terminal you will need to escape the & characters (i.e. change them to "\\&").
+
+To run them via a browser you can just omit the word "curl". (Well, if you made it this far, you probably know that, but anyway...) The server doesn't care what HTTP request method you use.
+
+To turn it on:
 
 `curl http://192.168.1.230:3666?device=lightstrip&action=on`
 
-Turn it off:
+To turn it off:
 
 `curl http://192.168.1.230:3666?device=lightstrip&action=off`
 
@@ -64,7 +71,6 @@ Fade the color, in this case, to pale blue, with a 3 second fade time (note that
 
 `curl http://192.168.1.230:3666?device=lightstrip&action=color&value=DDFFDD&fade=3000`
 
-Note that if running these curl commands in a terminal you will need to escape the & characters (i.e. change them to "\&").
 
 That's pretty much it.  Valid actions are:
 ```
@@ -84,7 +90,7 @@ Please, feel free. My apologies for any sloppy code or Node offenses-- this is s
 - *RGBIC control?*
 If there is some way of taking advantage of the RGBIC features I'd love to know about it. It's hardly urgent, and I won't be the one to figure that out. Honestly I don't really care about the animations-- I use the strip like track lighting, and can use their insanely complex app when I feel like setting a Halloween theme or something.
 - *de-sillification*
-There's some half-baked stuff in here. For example, there's no real need for an "action" parameter at all. The whole operation could be done by the request payload. Nicknames are pointless. The config is case-sensitive about IDs. Etc. Maybe I'll bother de-sillifying it.
+There's some half-baked stuff in here. For example, there's no real need for an "action" parameter at all. The whole operation could be done by the request payload. Nicknames are pointless. The config is case-sensitive about IDs. This allows GET requests to do things that should require POST requests. Etc. All of this is true, but it's not meant to be an enterprise solution, just a quick fix to the problem. Still, eventually I might de-sillify it.
 
 # Thank you
 I did the easy work, not the hard work. The hard work was done by [Joery-M](https://github.com/Joery-M), namely their [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control) project. Many thanks, Joery-M!
@@ -92,5 +98,5 @@ I did the easy work, not the hard work. The hard work was done by [Joery-M](http
 Thank you to Govee for finally adding this LAN control feature. This has the side-effect of taking a cheap light strip and turning it into a cheap good one.
 
 # Ranting
-All home automation devices should have a full, local API. The trend of having them doing *anything* over the internet, except voluntary upgrades, has always struck me as insane. 
+All IoT devices should have a local API. The trend of having them handling their most basic jobs over the internet, instead of strictly within the LAN, has always struck me as insane. 
 
