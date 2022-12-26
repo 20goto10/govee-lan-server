@@ -2,9 +2,9 @@
 Node.js web server for controlling Govee lighting devices via their local LAN API   
 
 # What it does
-Govee-lan-server is a lightweight web server that can handle a few simple actions for controlling one or more Govee lights. This uses their new local LAN API, via the govee-lan-control library. It does NOT use Govee's remote API or BLE; it must run within the device's LAN.
+Govee-lan-server is a lightweight web server that can handle a few simple actions for controlling one or more Govee lights. This uses their new local LAN API, via the [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control) Node library. It does NOT use Govee's remote API or BLE; it must run within the device's LAN.
 
-All of this could be done in standalone scripts (per the examples in govee-lan-control's documentation), but I wanted an always-on event listener to reduce latency caused by the startup "discovery" phase. Using a web server is the easiest way to make it reachable from the separate system that will be controlling it (a rooted Philips Hue hub). I use a Philips Hue dimmer switch control my Govee lights, using a Python script I wrote that runs on a rooted Hue: [hue-jazz][https://github.com/20goto10/hue-jazz/]. You could also issue the same requests from other home automation software. 
+All of this could be done in standalone scripts (per the examples in [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control)'s documentation), but I wanted an always-on event listener to reduce latency caused by the startup "discovery" phase. Using a web server is the easiest way to make it reachable from the separate system that will be controlling it (a rooted Philips Hue hub). I use a Philips Hue dimmer switch control my Govee lights, using a Python script I wrote that runs on a rooted Hue: [hue-jazz](https://github.com/20goto10/hue-jazz/). You could also issue the same requests from other home automation software. 
 
 I will likely abandon this project as soon as there is a good OpenHAB binding for these kinds of light strips.
 
@@ -26,7 +26,7 @@ cp config.json.sample config.json
 
 2. Edit `config.json` and map device IDs to whatever device nicknames you wish to use. If you're not sure of the device ID, just launch the server (per the next step). When the server discovers a device, it will print out the ID. Use that as a key in the 'device_map' section of the JSON config, with any nickname you like for the value. 
 
-The rest of the config, currently, is just a port setting for your server (default should be fine) and a default_fade_time if you want to fade colors over time (based on the examples from govee-lan-control), which can be left as-is. 
+The rest of the config, currently, is just a port setting for your server (default should be fine) and a default_fade_time if you want to fade colors over time (based on the examples from [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control)), which can be left as-is. 
 
 (I realize the device nicknames aren't really necessary but I prefer having a human-readable identifier in the URL so I understand my automations later. The config also makes it possible to avoid providing control of any devices you want to omit, for whatever reason may someday arise. I only have one Govee device in service so in my case it's a moot point.)
 
@@ -85,7 +85,7 @@ If there is some way of taking advantage of the RGBIC features I'd love to know 
 There's some half-baked stuff in here. For example, there's no real need for an "action" parameter at all. The whole operation could be done by the request payload. Nicknames are pointless. The config is case-sensitive about IDs. Etc. Maybe I'll bother de-sillifying it.
 
 # Thank you
-I did the easy work, not the hard work. The hard work was done by [Joery-M][https://github.com/Joery-M], namely their [Govee-lan-control][https://github.com/Joery-M/Govee-LAN-Control] project. Many thanks, Joery-M!
+I did the easy work, not the hard work. The hard work was done by [Joery-M](https://github.com/Joery-M), namely their [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control) project. Many thanks, Joery-M!
 
 Thank you to Govee for finally adding this LAN control feature. This has the side-effect of taking a cheap light strip and turning it into a cheap good one.
 
