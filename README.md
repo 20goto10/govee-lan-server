@@ -38,25 +38,33 @@ node govee-lan-server.js
 
 4. Once the app is set up, you can trigger the HTTP requests however you like (e.g. from curl, or a browser). Supposing it's running at 192.168.1.230, on the default port of 3666, and your device nickname in the device_map is "lightstrip".
 
-Turn it on.
+Turn it on:
+
 `curl http://192.168.1.230:3666?device=lightstrip&action=on`
 
-Turn it off.
+Turn it off:
+
 `curl http://192.168.1.230:3666?device=lightstrip&action=off`
 
 Set the brightness (in this case to 50%). The brightness scale is 0-100.
+
 `curl http://192.168.1.230:3666?device=lightstrip&action=brightness&value=50`
 
 Raise or lower the brightness relatively up or down by a given amount with the "delta" param: reads the brightness value and adjusts accordingly, by percentage (of the maximum). Use negative numbers to decrease. Here we lower it by 5%:
+
 `curl http://192.168.1.230:3666?device=lightstrip&action=brightness&delta=-5`
 
 Set the color, in this case, to 100% green-ness. The "%23" entity makes the # symbol.
+
 `curl http://192.168.1.230:3666?device=lightstrip&action=color&value=%2300FF00`
 
 Fade the color, in this case, to pale blue, with a 3 second fade time (note that if "fade" is not supplied, it will use the default from config).
+
 `curl http://192.168.1.230:3666?device=lightstrip&action=color&value=%23DDFFDD&fade=3000`
 
-Valid actions are:
+Note that if running these curl commands in a terminal you will need to escape the & characters (i.e. change them to "\&").
+
+That's pretty much it.  Valid actions are:
 ```
 on
 off
@@ -65,9 +73,6 @@ brightness
 fadecolor
 ```
 
-Note that if running these curl commands in a terminal you will need to escape the & characters (i.e. change them to "\&").
-
-That's pretty much it.
 
 # Contributing
 Please, feel free. My apologies for any sloppy code or Node offenses-- this is something I hacked together in a couple hours in vi on a Raspberry pi.
