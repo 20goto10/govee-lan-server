@@ -11,6 +11,9 @@ I will likely abandon this project as soon as there is a good OpenHAB binding fo
 # Warning!
 Don't run this on a publicly accessible server, unless you know what you're doing. There's no access control, and I don't want to be responsible for any involuntary lightshows. The risk of a serious hack is pretty small but I'd rather not be responsible for any part of it.
 
+# Another warning
+As of late Jan 2023, the "on" and "off" controls actually only control the color (either FFFFFF for on or 000000 for off; note that unlike HTML color codes, these don't contain the brightness, either).. There's a bug I haven't rooted out, either in Govee API itself or the govee-lan-control library. Once a bad request is sent to the lights, they stop working until the server is restarted. So, no setOn/setOff for now.
+
 # How to do it
 
 0. You'll need a modern version of Node.js. I'm on 16 but older versions would probably work. Assuming that's taken care of--

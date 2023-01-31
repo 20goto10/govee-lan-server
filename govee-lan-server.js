@@ -17,16 +17,17 @@ var govee = new Govee.default();
 var devices = {};
 
 const handle_action = (govee_device, nickname, action, params) => {
+  response = { error: "unknown" };
   switch(action) { 
-    case 'on': govee_device.actions.setOn();
-	       return { message: "turned on " + nickname + " (" + govee_device.deviceID + ")" };
+	  case 'on': govee_device.actions.setColor({ hex: '#ffffff' }); // rgb: 255,255,255); //Brightness(255); // On();
+	       response = { message: "turned on " + nickname + " (" + govee_device.deviceID + ")" };
 	       break;
-    case 'off': govee_device.actions.setOff();
-	        return { message: "turned off " + nickname + " (" + govee_device.deviceID + ")" };
+	  case 'off': govee_device.actions.setColor({ hex: '#000000' }); // setOff();
+	        response = { message: "turned off " + nickname + " (" + govee_device.deviceID + ")" };
 	        break;
     case 'brightness': if (params['value']) {
 	                 govee_device.actions.setBrightness(params.value);
-	                 return { message: "set " + nickname + " brightness to " + params.value + " (" + govee_device.deviceID + ")" };
+	                 response = { message: "set " + nickname + " brightness to " + params.value + " (" + govee_device.deviceID + ")" };
 	               } 
 		       else if (params['delta']) {
                          var current_brightness = govee_device.state.brightness;
@@ -38,46 +39,45 @@ const handle_action = (govee_device, nickname, action, params) => {
 				 new_brightness = 0;
 			 }
 	                 govee_device.actions.setBrightness(new_brightness);
-	                 return { message: "adjust " + nickname + " brightness by " + delta + "%, from " + current_brightness + " to " + new_brightness + " (" + govee_device.deviceID + ")" };
+	                 response = { message: "adjust " + nickname + " brightness by " + delta + "%, from " + current_brightness + " to " + new_brightness + " (" + govee_device.deviceID + ")" };
 		       }
 	               else {
-			 return { error: "brightness needs a 'value' or 'delta' setting" };
+			 response = { error: "brightness needs a 'value' or 'delta' setting" };
 		       }
 	               break;
     case 'color': if (params['value']) {
 	            govee_device.actions.setColor({ hex: '#' + params.value });
-	            return { message: "set " + nickname + " color to " + params.value + " (" + govee_device.deviceID + ")" };
+	            response = { message: "set " + nickname + " color to " + params.value + " (" + govee_device.deviceID + ")" };
 	          }
 	          else {
-	            return { error: "color needs a 'value' setting (a hex RGB string prefixed with #, like '#abc123')" };
+	            response = { error: "color needs a 'value' setting (a hex RGB string prefixed with #, like '#abc123')" };
 		  }
 		  break;
     case 'fadecolor': if (params['value']) {
-	            var fade_time = config['default_fade_time'];
-	            var param_note = '(config default_fade_time) ';
-	            if (params['time']) {
-	              fade_time = params.time;
-		      param_note = "(time from request) ";
-                    }
-	            var options = { color: { hex: params.value }, 
-		                    time: fade_time };
-	            if (params['brightness']) {
-		      // It doesn't really make sense to have a brightness
-		      // AND a hex code for the color, but, the option is 
-		      // there in the lib, so who am I to say you can't do it.
+	                var fade_time = config['default_fade_time'];
+	                var param_note = '(config default_fade_time) ';
+	                if (params['time']) {
+	                  fade_time = params.time;
+		          param_note = "(time from request) ";
+                        }
+	                var options = { color: { hex: params.value }, 
+		                        time: fade_time };
+	                if (params['brightness']) {
+		          // It doesn't really make sense to have a brightness
+		          // AND a hex code for the color, but, the option is 
+		          // there in the lib, so who am I to say you can't do it.
 
-	              options['brightness'] = params.brightness;
-		      param_note += "brightness " + params.brightness;
-                    }
-	            govee_device.actions.fadeColor(options);
-	            return { message: "fading " + nickname + " color to " + params.value + " over " + fade_time + "msec " + param_note + " (" + govee_device.deviceID + ")" };
-	          }
-	          else {
-	            return { error: "color needs a 'value' setting (a hex RGB string prefixed with #, like '#abc123')" };
-		  }
-		  break;
+	                 options['brightness'] = params.brightness;
+		         param_note += "brightness " + params.brightness;
+                        }
+	                govee_device.actions.fadeColor(options);
+	                response = { message: "fading " + nickname + " color to " + params.value + " over " + fade_time + "msec " + param_note + " (" + govee_device.deviceID + ")" };
+	              } else {
+	                response = { error: "color needs a 'value' setting (a hex RGB string prefixed with #, like '#abc123')" };
+		      }
+		      break;
   }
-  return { error: "unknown" };
+  return response;
 };
 
 const parse_request = (queryObject) => {
