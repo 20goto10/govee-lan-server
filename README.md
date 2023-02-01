@@ -1,6 +1,9 @@
 # govee-lan-server
 Node.js web server for controlling Govee lighting devices via their local LAN API   
 
+I've also written a [Python version called govee-lan-server-py](https://github.com/20goto10/govee-lan-server-py) that operates exactly the same. That one is more stable, but this one only does device discovery once (making it a bit faster-- too bad it is currently defective).
+
+
 # What it does
 Govee-lan-server is a lightweight web server that can handle a few simple actions for controlling one or more Govee lights. This uses their new local LAN API, via the [Govee-lan-control](https://github.com/Joery-M/Govee-LAN-Control) Node library. It does NOT use Govee's remote API or BLE; it must run within the device's LAN.
 
